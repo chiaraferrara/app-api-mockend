@@ -11,10 +11,10 @@ export default async function handler(
 ) {
   try {
     const data = await fetch(
-      "https://mockend.up.railway.app/api/products"
+      "https://nodejs-api-production-0c7a.up.railway.app/"
     ).then((response) => response.json());
     res.status(200).json({ data, error: null });
-    console.log(data);
+    console.log("Retrieved data from the API.");
   } catch (error) {
     res.status(500).json({ data : null, error: "Errore" });
   }
