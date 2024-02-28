@@ -24,8 +24,8 @@ export default function Home() {
   return (
     <>
       <div>
-        {myData.map((product: { title: string }) => (
-          <h2>{product.title}</h2>
+        {myData.map((product: { id: any, title: string }) => (
+          <div key={product.id}><h2>{product.title}</h2></div>
         ))}
       </div>
     </>
