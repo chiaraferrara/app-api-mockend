@@ -1,30 +1,35 @@
-import { useEffect, useState } from "react";
+interface Product{
+  id: number,
+  title: string
 
-export default function Home() {
-  const [myData, setMyData] = useState([]);
+}
 
-  useEffect(() => {
-    try {
-      fetch("/api/products")
-        .then((response) => response.json())
-        .then((data: any) => {
-          if (data.data) {
-            setMyData(data.data);
-            console.log(data);
-          } else {
-            setMyData([]);
-          }
-        });
-    } catch (error) {
-      setMyData([]);
-    }
-  }, []);
+export const getServerSideProps = async () => {
+  try{
+  const res = await fetch("https://nodejs-api-production-0c7a.up.railway.app/");
+  const products : Product[] = await res.json();
+console.log(products);
+  return {
+    props: { products },
+  };}catch(error){
+    return {
+      props: { products: [] },
+    };
+  }
+}
 
-  console.log(myData);
+interface Props {
+  products: Product[]
+
+}
+
+
+export default function Home({ products }: Props) {
   return (
     <>
       <div>
-        {myData.map((product: { id: any, title: string }) => (
+        <h1>Products</h1>
+        {products.length > 0 && products.map((product: { id: any, title: string }) => (
           <div key={product.id}><h2>{product.title}</h2></div>
         ))}
       </div>
